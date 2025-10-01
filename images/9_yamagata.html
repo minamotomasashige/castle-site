@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9. 山形城 旅記録</title>
+    <style>
+        /* コメント欄と写真エリアの基本デザイン */
+        .content-section {
+            width: 80%; /* ページの幅を調整 */
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px; /* 角を少し丸く */
+        }
+        
+        /* コメント入力枠のデザイン */
+        textarea {
+            width: 100%;
+            min-height: 150px; /* 高さの最低値を設定 */
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* paddingを含めたサイズ計算 */
+            font-size: 16px;
+            resize: vertical; /* 縦方向のみリサイズ可能 */
+        }
+
+        /* 写真配置エリアの枠（こだわりのデザイン） */
+        .photo-area {
+            display: flex; /* 写真を横に並べるために使う（後で説明） */
+            gap: 20px; /* 写真と写真の間隔 */
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9; /* 薄い背景色 */
+            border: 1px dashed #aaa; /* 点線の枠 */
+            border-radius: 12px;
+        }
+
+        /* 実際に配置する写真の枠（正方形にトリミングされるイメージ） */
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            border: 5px solid #fff; /* 写真の周りに白い太枠 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影をつけて立体的に */
+            overflow: hidden; /* 枠からはみ出た部分を非表示 */
+        }
+
+        /* 写真そのものの設定 */
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 写真を枠に合わせてトリミング（重要） */
+            display: block;
+        }
+    /* 新しいCSSを<style>タグに追加 */
+
+/* 写真とコメントをひとまとめにするグループのスタイル */
+.photo-group {
+    display: flex; /* グループ内は縦に並ぶ（flex-direction: column; がデフォルト） */
+    flex-direction: column; 
+    align-items: center; /* 写真とコメントを中央揃え */
+    width: 200px; /* 写真枠の幅に合わせる */
+}
+
+/* 個別コメント入力枠のデザイン */
+.photo-comment {
+    width: 100%; /* photo-groupの幅いっぱいに広げる */
+    height: 60px; /* 高さを低めに設定 */
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 13px;
+    resize: none; /* リサイズできないように固定 */
+}
+/* 既存のCSS（table要素）を以下のように調整 */
+table {
+    border-collapse: collapse;
+    width: 95%; /* 画面幅の95%を使うように変更 */
+    max-width: 600px; /* PCなど広い画面では最大600pxに制限 */
+    margin: 20px auto;
+    font-size: 14px; /* スマホで見やすいように少し文字を小さく */
+}
+/* --- CSSコードの追加（<style>タグ内、一番下へ） --- */
+
+/* 7. 削除ボタンのスタイル */
+.delete-photo-btn {
+    background-color: #dc3545; /* 赤色 */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px; /* 他の要素との間に隙間を作る */
+    transition: background-color 0.2s; /* ホバー時の変化を滑らかに */
+}
+
+.delete-photo-btn:hover {
+    background-color: #c82333;
+}
+    </style>
+</head>
+<body>
+
+    <div class="content-section">
+        <h1>4. 山形城 詳細情報</h1>
+        <p><a href="shirosumaho.html">城一覧へ戻る</a></p>
+    </div>
+
+    <div class="content-section">
+        <h2>訪問記録・メモ</h2>
+        <textarea id="my-notes" placeholder="ここに訪問した日付や感想、メモなどを自由に書き込んでください。"></textarea>
+        </div>
+
+    <div class="content-section">
+    <h2>📷 訪問写真と個別メモ</h2>
+    <div class="photo-area" id="photo-area-4"> <input type="file" id="photo-upload-4" accept="image/*" style="display: none;">
+        <button onclick="document.getElementById('photo-upload-4').click()">
+            写真をアルバムから追加
+        </button>
+
+        </div>
+</div>
+
+       
+        </div>
+</div>
+<script>
+    // 定数定義 (城ごとに変わるIDは '4' の部分のみ)
+    const CASTLE_ID = '4'; // ★弘前城なので「4」★
+    const NOTES_KEY = 'castleGeneralNotes_'; 
+    const PHOTO_KEY = 'castle_photos_';
+    const PHOTO_COMMENT_KEY = 'castlePhotoComments_';
+
+    // ページ読み込み時に実行
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. 一般メモの復元と保存イベント設定
+        loadGeneralNotes(CASTLE_ID);
+        document.getElementById('general-notes-' + CASTLE_ID).addEventListener('input', saveGeneralNotes);
+
+        // 2. 写真と個別メモの復元とアップロードイベント設定
+        loadStoredPhotos(CASTLE_ID); 
+        const fileInput = document.getElementById('photo-upload-' + CASTLE_ID);
+        if (fileInput) {
+            fileInput.addEventListener('change', handleImageUpload);
+        }
+    });
+    
+    // =========================================================
+    // 1. 一般メモの保存・復元
+    // =========================================================
+
+    /* 一般メモをLocalStorageに保存 */
+    function saveGeneralNotes() {
+        const key = NOTES_KEY + CASTLE_ID;
+        const content = document.getElementById('general-notes-' + CASTLE_ID).value;
+        localStorage.setItem(key, content);
+    }
+
+    /* 一般メモをLocalStorageから復元 */
+    function loadGeneralNotes(castleId) {
+        const key = NOTES_KEY + castleId;
+        const savedContent = localStorage.getItem(key);
+        if (savedContent) {
+            document.getElementById('general-notes-' + castleId).value = savedContent;
+        }
+    }
+
+
+    // =========================================================
+    // 2. 写真のアップロード・保存・表示
+    // =========================================================
+
+    /* 写真が選択されたときの処理 */
+    function handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64Image = e.target.result;
+            // 写真データを保存し、ページに表示
+            savePhotoToLocalStorage(CASTLE_ID, base64Image);
+            displayNewPhoto(CASTLE_ID, { data: base64Image, timestamp: Date.now() });
+        };
+        reader.readAsDataURL(file);
+        event.target.value = ''; // 同じ写真を再度アップロードできるようにファイルをクリア
+    }
+
+    /* Base64画像をLocalStorageに保存 */
+    function savePhotoToLocalStorage(castleId, base64Image) {
+        const key = PHOTO_KEY + castleId;
+        let storedPhotos = localStorage.getItem(key);
+        let photoArray = storedPhotos ? JSON.parse(storedPhotos) : [];
+
+        photoArray.push({
+            data: base64Image,
+            timestamp: Date.now() // ユニークIDとしてタイムスタンプを保存
+        });
+
+        localStorage.setItem(key, JSON.stringify(photoArray));
+    }
+
+    /* 保存された写真をページに表示 */
+    function displayNewPhoto(castleId, photoData) {
+        const photoArea = document.getElementById('photo-area-' + castleId);
+        if (!photoArea) return;
+        
+        // タイムスタンプをユニークなIDとして使用 (新規アップロード or 復元)
+        const timestamp = photoData.timestamp || Date.now(); 
+        const base64Image = photoData.data || photoData; // 復元時はオブジェクト、新規時は文字列
+
+        // HTML要素を作成 (photo-group, photo-frame, img)
+        const photoGroup = document.createElement('div');
+        photoGroup.classList.add('photo-group');
+        const photoFrame = document.createElement('div');
+        photoFrame.classList.add('photo-frame');
+        const img = document.createElement('img');
+        img.src = base64Image;
+        img.alt = '訪問写真';
+        photoFrame.appendChild(img);
+        photoGroup.appendChild(photoFrame);
+
+        // 個別コメント枠を作成
+        const textarea = document.createElement('textarea');
+        textarea.classList.add('photo-comment');
+        textarea.id = 'comment_' + castleId + '_' + timestamp; 
+        textarea.placeholder = "この写真に関するメモ";
+        
+        // メモ保存イベントを設定
+        textarea.addEventListener('input', savePhotoComment); 
+        photoGroup.appendChild(textarea);
+        
+        // ★★★ 削除ボタンの作成と追加 ★★★
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '写真を削除';
+        deleteButton.classList.add('delete-photo-btn');
+        deleteButton.setAttribute('data-timestamp', timestamp); 
+        
+        deleteButton.onclick = function() {
+            deletePhoto(this, castleId, timestamp);
+        };
+        photoGroup.appendChild(deleteButton); 
+        // ★★★ 削除ボタンの作成と追加 終わり ★★★
+
+        // 写真エリアの「写真追加ボタン」の直前に追加
+        const button = photoArea.querySelector('button');
+        photoArea.insertBefore(photoGroup, button);
+
+        // 復元処理の場合、メモも同時にロード
+        if (photoData.data) {
+             loadSinglePhotoComment(textarea.id);
+        }
+    }
+
+    /* ページ読み込み時に保存された写真を全て復元 */
+    function loadStoredPhotos(castleId) {
+        const key = PHOTO_KEY + castleId;
+        const storedPhotos = localStorage.getItem(key);
+        if (!storedPhotos) return;
+
+        const photoArray = JSON.parse(storedPhotos);
+        photoArray.forEach(photoData => {
+            // 写真データを渡し、displayNewPhoto内でメモも復元
+            displayNewPhoto(castleId, photoData); 
+        });
+    }
+
+    // =========================================================
+    // 3. 個別メモの保存・復元
+    // =========================================================
+    
+    /* 個別メモをLocalStorageに保存する処理 */
+    function savePhotoComment(event) {
+        const textarea = event.target;
+        const key = PHOTO_COMMENT_KEY + CASTLE_ID; // CASTLE_IDを参照
+        const commentId = textarea.id; 
+        const content = textarea.value;
+
+        let storedComments = localStorage.getItem(key);
+        let comments = storedComments ? JSON.parse(storedComments) : {};
+
+        comments[commentId] = content;
+        localStorage.setItem(key, JSON.stringify(comments));
+    }
+
+    /* 個別メモをLocalStorageから復元 (displayNewPhotoから呼ばれる) */
+    function loadSinglePhotoComment(commentId) {
+        const key = PHOTO_COMMENT_KEY + CASTLE_ID; // CASTLE_IDを参照
+        const storedComments = localStorage.getItem(key);
+        if (!storedComments) return;
+
+        const comments = JSON.parse(storedComments);
+        const textarea = document.getElementById(commentId);
+        
+        if (textarea && comments[commentId] !== undefined) {
+            textarea.value = comments[commentId];
+        }
+    }
+    
+    // =========================================================
+    // 4. 写真・メモ削除機能
+    // =========================================================
+
+    /* 写真と個別メモを削除する処理 */
+    function deletePhoto(buttonElement, castleId, timestamp) {
+        if (!confirm('この写真とメモを削除してもよろしいですか？')) {
+            return;
+        }
+
+        // 1. LocalStorageから写真データを削除
+        const photoKey = PHOTO_KEY + castleId;
+        let storedPhotos = localStorage.getItem(photoKey);
+        let photoArray = storedPhotos ? JSON.parse(storedPhotos) : [];
+
+        const newPhotoArray = photoArray.filter(item => item.timestamp !== timestamp);
+        localStorage.setItem(photoKey, JSON.stringify(newPhotoArray));
+
+        // 2. LocalStorageから個別メモデータを削除
+        const commentKey = PHOTO_COMMENT_KEY + castleId;
+        let storedComments = localStorage.getItem(commentKey);
+        let comments = storedComments ? JSON.parse(storedComments) : {};
+        
+        const commentId = 'comment_' + castleId + '_' + timestamp;
+        delete comments[commentId]; 
+        localStorage.setItem(commentKey, JSON.stringify(comments));
+
+        // 3. 画面上の要素を削除
+        const photoGroup = buttonElement.closest('.photo-group');
+        if (photoGroup) {
+            photoGroup.remove();
+        }
+    }
+</script>
+</body>
+
+</html>

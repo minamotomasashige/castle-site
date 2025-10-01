@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本100名城 訪問チェックリスト</title>
+    <style>
+        /* --- CSSコード: デザインの指定 --- */
+        table {
+            border-collapse: collapse;
+            width: 70%; /* テーブルの幅を広げてチェック欄を追加 */
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        /* 訪問チェック欄（一番右の列）のスタイル */
+        .visit-status {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            cursor: pointer; /* クリックできることを示す */
+            user-select: none; /* テキスト選択を防止 */
+            width: 120px; /* 列幅を固定 */
+        }
+        /* 訪問済み（丸）のスタイル */
+        .visited {
+            color: white;
+            background-color: #4CAF50; /* 緑色 */
+        }
+        /* 未訪問（バツ）のスタイル */
+        .not-visited {
+            color: #333;
+            background-color: #f8f8f8;
+        }
+        /* 既存のCSS（table要素）を以下のように調整 */
+table {
+    border-collapse: collapse;
+    width: 95%; /* 画面幅の95%を使うように変更 */
+    max-width: 600px; /* PCなど広い画面では最大600pxに制限 */
+    margin: 20px auto;
+    font-size: 14px; /* スマホで見やすいように少し文字を小さく */
+}
+    </style>
+</head>
+<body>
+
+        <h3>百名城一覧</h3>
+        <table border="1" id="castle-table">
+            <tr>
+                <th>城ナンバー</th>
+                <th>名前</th>
+                <th>訪問チェック</th>
+            </tr>
+            <tr>
+                <tr>
+<tr>
+    <td>
+        <a href="https://ja.wikipedia.org/wiki/弘前城" target="_blank">4</a>
+    </td>
+    <td>
+        <a href="4_hirosaki.html" target="_blank">弘前城</a>
+    </td>
+    <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+</tr>
+<tr>
+    <td>
+        <a href="https://ja.wikipedia.org/wiki/根城" target="_blank">5</a>
+    </td>
+    <td>
+        <a href="5_nejo.html" target="_blank">根城</a>
+    </td>
+    <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+</tr>
+<tr>
+    <td>
+        <a href="https://ja.wikipedia.org/wiki/盛岡城" target="_blank">6</a>
+    </td>
+    <td>
+        <a href="6_morioka.html" target="_blank">盛岡城</a>
+    </td>
+    <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+</tr>
+<tr>
+    <td>
+        <a href="https://ja.wikipedia.org/wiki/多賀城" target="_blank">7</a>
+    </td>
+    <td>
+        <a href="7_taga.html" target="_blank">多賀城</a>
+    </td>
+    <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+</tr>
+<tr>
+    <td>
+        <a href="https://ja.wikipedia.org/wiki/仙台城" target="_blank">8</a>
+    </td>
+    <td>
+        <a href="8_sendai.html" target="_blank">仙台城</a>
+    </td>
+    <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+</tr>
+<tr>
+    <td>
+        <a href="https://ja.wikipedia.org/wiki/山形城" target="_blank">9</a>
+    </td>
+    <td>
+        <a href="9_yamagata.html" target="_blank">山形城</a>
+    </td>
+    <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+</tr>
+<tr>
+    <td>
+        <a href="https://ja.wikipedia.org/wiki/二本松城" target="_blank">10</a>
+    </td>
+    <td>
+        <a href="10_nihonmatsu.html" target="_blank">二本松城</a>
+    </td>
+    <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+</tr>
+<tr>
+    <td>
+        <a href="https://ja.wikipedia.org/wiki/会津若松城" target="_blank">11</a>
+    </td>
+    <td>
+        <a href="11_aizuwakamatsu.html" target="_blank">会津若松城</a>
+    </td>
+    <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+</tr>
+<tr>
+    <td>
+        <a href="https://ja.wikipedia.org/wiki/小峰城" target="_blank">12</a>
+    </td>
+    <td>
+        <a href="12_komine.html" target="_blank">小峰城</a>
+    </td>
+    <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+</tr>
+</tr>
+            </tr>
+        </table>
+        <style>
+    /* 訪問チェック欄（3列目）の基本スタイル */
+    .visit-status {
+        text-align: center; /* 文字を中央揃え */
+        font-weight: bold;
+        font-size: 1.2em;
+        cursor: pointer; /* マウスオーバー時にクリック可能なカーソルにする */
+        user-select: none; /* クリック時に文字が選択されるのを防ぐ */
+        width: 100px; /* 列幅を固定 */
+        color: #333; /* 文字色（バツの色） */
+        background-color: #f8f8f8; /* 背景色（未訪問） */
+    }
+    /* 訪問済み（丸）の状態のスタイル */
+    .visited {
+        color: white !important; /* 文字を白に */
+        background-color: #4CAF50 !important; /* 背景を緑色に */
+    }
+</style>
+<script>
+    // 訪問状態を保存するためのキー名
+    const STORAGE_KEY = 'castleVisitStatus';
+
+    // ページ読み込み時に実行
+    window.onload = function() {
+        // 全てのチェック<td>要素に城のIDを割り当てる
+        assignCastleIds();
+        // 保存された状態を読み込む
+        loadVisitStatus();
+    };
+    
+    // 全ての訪問チェック欄に一意のID（1から始まる番号）を割り当てる関数
+    function assignCastleIds() {
+        const table = document.getElementById('castle-table');
+        if (!table) return;
+
+        // ヘッダー行 (<tr>) を除いた全てのデータ行 (<tr>) を取得
+        const dataRows = table.querySelectorAll('tr:not(:first-child)');
+        
+        let id = 1;
+        dataRows.forEach(row => {
+            // 各行の3番目のセル（訪問チェック欄）を取得
+            const statusCell = row.querySelector('.visit-status');
+            if (statusCell) {
+                // セルに連番のIDを割り当て
+                statusCell.setAttribute('data-castle-id', id);
+                id++;
+            }
+        });
+    }
+
+    /* 訪問状態を切り替えて保存する関数 */
+    function toggleStatus(element) {
+        // 1. 状態の切り替え
+        const isVisited = element.classList.contains('visited');
+        // data-castle-idは、assignCastleIdsで設定されている
+        const castleId = element.dataset.castleId; 
+
+        if (isVisited) {
+            // 状態を「訪問済み」から「未訪問」へ切り替え
+            element.classList.remove('visited');
+            element.classList.add('not-visited');
+            element.textContent = '×';
+        } else {
+            // 状態を「未訪問」から「訪問済み」へ切り替え
+            element.classList.remove('not-visited');
+            element.classList.add('visited');
+            element.textContent = '〇';
+        }
+
+        // 2. 状態をLocalStorageに保存
+        saveVisitStatus(castleId, !isVisited); // 状態を反転させて保存
+    }
+
+    /* LocalStorageにデータを保存する処理 */
+    function saveVisitStatus(castleId, isVisited) {
+        let status = localStorage.getItem(STORAGE_KEY);
+        let visitStatus = status ? JSON.parse(status) : {};
+
+        // 特定の城の状態を更新
+        visitStatus[castleId] = isVisited;
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(visitStatus));
+    }
+
+    /* LocalStorageからデータを読み込んで表に反映する処理 (バグ修正済み) */
+    function loadVisitStatus() {
+        const status = localStorage.getItem(STORAGE_KEY);
+        const visitStatus = status ? JSON.parse(status) : {};
+        
+        // すべてのチェック欄の<td>要素を取得
+        const statusCells = document.querySelectorAll('.visit-status');
+
+        statusCells.forEach(cell => {
+            const castleId = cell.dataset.castleId;
+            const isSavedVisited = visitStatus[castleId] === true; // 保存データがあるか確認
+
+            // 1. まず、初期状態に戻す（これがバグ修正のポイント）
+            cell.classList.remove('visited');
+            cell.classList.add('not-visited');
+            cell.textContent = '×';
+
+            // 2. 保存データが「訪問済み」なら、状態を上書き
+            if (isSavedVisited) {
+                cell.classList.remove('not-visited');
+                cell.classList.add('visited');
+                cell.textContent = '〇';
+            }
+            // 保存データがfalse、または無い場合は、初期状態(×)のままになる
+        });
+    }
+</script>
+</body>

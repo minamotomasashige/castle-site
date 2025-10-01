@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>日本100名城 訪問チェックリスト</title>
+
+    <style>
+        /* --- CSSコード: 訪問チェックリストのスタイル統合版 --- */
+        
+        /* 1. テーブルの基本設定とスマホ対応 */
+        table {
+            border-collapse: collapse;
+            width: 95%; /* 画面幅の95%を使う */
+            max-width: 600px; /* PCなど広い画面での最大幅 */
+            margin: 20px auto;
+            font-size: 14px;
+        }
+        
+        /* 2. セルとヘッダーの基本スタイル */
+        th, td {
+            border: 1px solid #333;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* 3. 訪問チェック欄のスタイル */
+        .visit-status {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            cursor: pointer; 
+            user-select: none;
+            width: 100px; /* 列幅を固定 */
+            color: #333; /* 文字色（バツの色） */
+            background-color: #f8f8f8; /* 背景色（未訪問） */
+        }
+
+        /* 4. 訪問済み（〇）の状態のスタイル */
+        .visited {
+            color: white !important; 
+            background-color: #4CAF50 !important; /* 緑色 */
+        }
+    /* --- index.htmlの <style> タグ内に追加 --- */
+
+body {
+    /* 1. background-imageはJavaScriptで動的に設定するため、ここでは指定しない */
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: scroll; /* スクロールに合わせて画像も動く */
+    
+    background-color: #f0f0f0; 
+    
+    /* 2. 画像切り替えを滑らかにするための設定 */
+    transition: background-image 1.5s ease-in-out; 
+}
+/* --- index.htmlの <style> タグ内に追加/修正 --- */
+
+table {
+    border-collapse: collapse;
+    width: 95%;
+    max-width: 600px;
+    margin: 20px auto;
+    font-size: 14px;
+    
+    /* ★追加：表の背景を半透明の白色にする (rgba: Red, Green, Blue, Alpha(透明度)) */
+    background-color: rgba(255, 255, 255, 0.85); /* 85%の不透明度 */
+    
+    border-radius: 8px; /* 角を丸くして背景となじませる */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 立体感を出す影 */
+}
+    </style>
+</head>
+<body>
+    
+
+    <h2>百名城一覧</h2>
+    <h3>東北地方</h3>
+    <table border="1" id="castle-table">
+        <thead>
+            <tr>
+                <th>城ナンバー</th>
+                <th>名前</th>
+                <th>訪問チェック</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <a href="https://ja.wikipedia.org/wiki/弘前城" target="_blank">4</a>
+                </td>
+                <td>
+                    <a href="4_hirosaki.html" target="_blank">弘前城</a>
+                </td>
+                <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://ja.wikipedia.org/wiki/根城" target="_blank">5</a>
+                </td>
+                <td>
+                    <a href="5_nejo.html" target="_blank">根城</a>
+                </td>
+                <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://ja.wikipedia.org/wiki/盛岡城" target="_blank">6</a>
+                </td>
+                <td>
+                    <a href="6_morioka.html" target="_blank">盛岡城</a>
+                </td>
+                <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://ja.wikipedia.org/wiki/多賀城" target="_blank">7</a>
+                </td>
+                <td>
+                    <a href="7_taga.html" target="_blank">多賀城</a>
+                </td>
+                <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://ja.wikipedia.org/wiki/仙台城" target="_blank">8</a>
+                </td>
+                <td>
+                    <a href="8_sendai.html" target="_blank">仙台城</a>
+                </td>
+                <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://ja.wikipedia.org/wiki/山形城" target="_blank">9</a>
+                </td>
+                <td>
+                    <a href="9_yamagata.html" target="_blank">山形城</a>
+                </td>
+                <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://ja.wikipedia.org/wiki/二本松城" target="_blank">10</a>
+                </td>
+                <td>
+                    <a href="10_nihonmatsu.html" target="_blank">二本松城</a>
+                </td>
+                <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://ja.wikipedia.org/wiki/会津若松城" target="_blank">11</a>
+                </td>
+                <td>
+                    <a href="11_aizuwakamatsu.html" target="_blank">会津若松城</a>
+                </td>
+                <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="https://ja.wikipedia.org/wiki/小峰城" target="_blank">12</a>
+                </td>
+                <td>
+                    <a href="12_komine.html" target="_blank">小峰城</a>
+                </td>
+                <td class="visit-status not-visited" onclick="toggleStatus(this)">×</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+<script>
+    // 訪問状態を保存するためのキー名
+    const STORAGE_KEY = 'castleVisitStatus';
+
+    // ページ読み込み時に実行
+    window.onload = function() {
+        // 全てのチェック<td>要素に城のIDを割り当てる
+        assignCastleIds();
+        // 保存された状態を読み込む
+        loadVisitStatus();
+    };
+    
+    // 全ての訪問チェック欄に一意のID（1から始まる番号）を割り当てる関数
+    function assignCastleIds() {
+        const table = document.getElementById('castle-table');
+        if (!table) return;
+
+        // tbody内のデータ行 (<tr>) のみを取得するように修正
+        const dataRows = table.querySelectorAll('tbody tr'); 
+        
+        // IDはリスト順に割り振る（4番から始まるが、JS内部では1から数える）
+        let id = 1; 
+        dataRows.forEach(row => {
+            const statusCell = row.querySelector('.visit-status');
+            if (statusCell) {
+                // セルに連番のIDを割り当て
+                statusCell.setAttribute('data-castle-id', id);
+                id++;
+            }
+        });
+    }
+
+    /* 訪問状態を切り替えて保存する関数 */
+    function toggleStatus(element) {
+        const isVisited = element.classList.contains('visited');
+        const castleId = element.dataset.castleId; 
+
+        if (isVisited) {
+            element.classList.remove('visited');
+            element.classList.add('not-visited');
+            element.textContent = '×';
+        } else {
+            element.classList.remove('not-visited');
+            element.classList.add('visited');
+            element.textContent = '〇';
+        }
+
+        // 状態をLocalStorageに保存
+        saveVisitStatus(castleId, !isVisited); 
+    }
+
+    /* LocalStorageにデータを保存する処理 */
+    function saveVisitStatus(castleId, isVisited) {
+        let status = localStorage.getItem(STORAGE_KEY);
+        let visitStatus = status ? JSON.parse(status) : {};
+
+        visitStatus[castleId] = isVisited;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(visitStatus));
+    }
+
+    /* LocalStorageからデータを読み込んで表に反映する処理 */
+    function loadVisitStatus() {
+        const status = localStorage.getItem(STORAGE_KEY);
+        const visitStatus = status ? JSON.parse(status) : {};
+        
+        const statusCells = document.querySelectorAll('.visit-status');
+
+        statusCells.forEach(cell => {
+            const castleId = cell.dataset.castleId;
+            const isSavedVisited = visitStatus[castleId] === true; 
+
+            // 1. まず、初期状態（×）に設定
+            cell.classList.remove('visited');
+            cell.classList.add('not-visited');
+            cell.textContent = '×';
+
+            // 2. 保存データが「訪問済み」なら（〇）に上書き
+            if (isSavedVisited) {
+                cell.classList.remove('not-visited');
+                cell.classList.add('visited');
+                cell.textContent = '〇';
+            }
+        });
+    }
+    /* --- index.htmlの <script> タグ内に追記 --- */
+
+// =========================================================
+// 複数背景画像のスライド表示/ランダム表示
+// =========================================================
+
+// ★★★ 1. 画像ファイルのリスト設定（最重要） ★★★
+// ここに使用したいすべての画像ファイル名を順番にリストアップします。
+// 画像ファイルはindex.htmlと同じフォルダに置いてください。
+const BACKGROUND_IMAGES = [
+    'bg_01.jpg', 
+    'bg_02.jpg', 
+    'bg_03.jpg',
+    // 今後、他の地方の画像が増えたらここに追加
+    // 'bg_kanto_a.jpg', 
+    // 'bg_chubu_b.jpg',
+];
+
+let currentImageIndex = 0; // 現在表示中の画像インデックス (順番表示用)
+
+
+/* ★★★ 2. 画像表示を切り替えるメインの関数 ★★★ */
+function changeBackgroundImage() {
+    
+    // ----------------------------------------------------
+    // 【A. 順番に切り替えたい場合】: こちらを使用
+    // ----------------------------------------------------
+    
+    // リストから次の画像を取得
+    const nextImage = BACKGROUND_IMAGES[currentImageIndex];
+    
+    // インデックスを更新 (リストの最後まで行ったら0に戻る)
+    currentImageIndex = (currentImageIndex + 1) % BACKGROUND_IMAGES.length;
+
+
+    // ----------------------------------------------------
+    // 【B. ランダムに切り替えたい場合】: こちらを使いたい場合はAをコメントアウト
+    // ----------------------------------------------------
+    /*
+    // 以下の2行を有効にすればランダム表示になります
+    // const randomIndex = Math.floor(Math.random() * BACKGROUND_IMAGES.length);
+    // const nextImage = BACKGROUND_IMAGES[randomIndex];
+    */
+
+
+    // ----------------------------------------------------
+    // 実際に背景を更新する処理
+    // ----------------------------------------------------
+    if (nextImage) {
+        document.body.style.backgroundImage = `url('${nextImage}')`;
+    }
+}
+
+/* ★★★ 3. ページ読み込み時の処理 ★★★ */
+document.addEventListener('DOMContentLoaded', function() {
+    if (BACKGROUND_IMAGES.length === 0) return; // 画像がない場合は何もしない
+    
+    // ページが読み込まれたらすぐに最初の背景を表示
+    changeBackgroundImage(); 
+    
+    // 5秒ごとに画像を自動で切り替え
+    // ★切り替え間隔を変えたい場合は 5000 の数字を調整してください★
+    setInterval(changeBackgroundImage, 5000); 
+});
+</script>
+</body>
+</html>
